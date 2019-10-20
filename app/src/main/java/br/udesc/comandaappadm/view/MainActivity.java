@@ -42,6 +42,14 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(it);
             }
         });
+
+        btnConfigProduto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent it = new Intent(MainActivity.this, ConfiguracaoProduto.class);
+                startActivity(it);
+            }
+        });
     }
 
 

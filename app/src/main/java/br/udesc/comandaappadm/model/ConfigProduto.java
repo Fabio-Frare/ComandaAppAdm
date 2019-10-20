@@ -1,10 +1,15 @@
 package br.udesc.comandaappadm.model;
 
+import androidx.annotation.NonNull;
+
+import java.util.List;
+
 public class ConfigProduto {
 
     private String idConfigProduto;
     private String nomeConfigProduto;
-    private float acrescimoPreco;
+    private List<ConfigValues> values;
+
 
     public String getIdConfigProduto() {
         return idConfigProduto;
@@ -22,12 +27,18 @@ public class ConfigProduto {
         this.nomeConfigProduto = nomeConfigProduto;
     }
 
-    public float getAcrescimoPreco() {
-        return acrescimoPreco;
+    public List<ConfigValues> getValues() {
+        return values;
     }
 
-    public void setAcrescimoPreco(float acrescimoPreco) {
-        this.acrescimoPreco = acrescimoPreco;
+    public void setValues(List<ConfigValues> values) {
+        this.values = values;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nomeConfigProduto;
     }
 
 }

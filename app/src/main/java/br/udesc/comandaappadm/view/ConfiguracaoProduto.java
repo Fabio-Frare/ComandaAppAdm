@@ -25,22 +25,24 @@ import java.util.UUID;
 
 import br.udesc.comandaappadm.R;
 import br.udesc.comandaappadm.model.Categoria;
+import br.udesc.comandaappadm.model.ConfigProduto;
 
-public class CadastroCategoria extends AppCompatActivity {
+public class ConfiguracaoProduto extends AppCompatActivity {
 
-    private EditText editNomeCategoria;
+    private EditText editNomeConfiguracao;
     private Button btnNovo, btnAtualizar, btnApagar;
-    private ListView listViewCategoria;
+    private ListView listViewConfiguracao;
     private FirebaseDatabase firebaseDatabase;
     private DatabaseReference databaseReference;
-    private List<Categoria> listCategoria;
-    private ArrayAdapter<Categoria> arrayAdapterCategoria;
-    private Categoria categoriaSelecionada;
+    private List<ConfigProduto> listConfiguracao;
+    private ArrayAdapter<ConfigProduto> arrayAdapterConfiguracao;
+    private ConfigProduto configuracaoSelecionada;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cadastro_categoria);
+        setContentView(R.layout.activity_configuracao_produto);
 
         initComponentes();
         initFirebase();
@@ -50,73 +52,73 @@ public class CadastroCategoria extends AppCompatActivity {
     }
 
     private void initComponentes() {
-        editNomeCategoria = findViewById(R.id.editNomeCategoria);
-        listViewCategoria = findViewById(R.id.listViewCategoria);
-        btnNovo           = findViewById(R.id.btnNovoConfig);
-        btnAtualizar      = findViewById(R.id.btnAtualizarConfig);
-        btnApagar         = findViewById(R.id.btnApagarConfig);
-        listCategoria     = new ArrayList<>();
+        editNomeConfiguracao = findViewById(R.id.editNomeConfiguracao);
+        listViewConfiguracao = findViewById(R.id.listViewConfiguracao);
+        btnNovo = findViewById(R.id.btnNovoConfig);
+        btnAtualizar = findViewById(R.id.btnAtualizarConfig);
+        btnApagar = findViewById(R.id.btnApagarConfig);
+        listConfiguracao = new ArrayList<>();
     }
 
     private void initFirebase() {
-        FirebaseApp.initializeApp(CadastroCategoria.this);
-        firebaseDatabase  = FirebaseDatabase.getInstance();
+        FirebaseApp.initializeApp(ConfiguracaoProduto.this);
+        firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.setPersistenceEnabled(true);     // além do Firebase, tbm atualiza no banco interno do meu aplicativo.
         databaseReference = firebaseDatabase.getReference();
     }
 
     private void initListners() {
-        listViewCategoria.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listViewConfiguracao.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int position, long id) {
-                categoriaSelecionada = (Categoria) adapterView.getItemAtPosition(position);
-                editNomeCategoria.setText(categoriaSelecionada.getNomeCategoria());
+                configuracaoSelecionada = (ConfigProduto) adapterView.getItemAtPosition(position);
+                editNomeConfiguracao.setText(configuracaoSelecionada.getNomeConfigProduto());
             }
         });
 
         btnNovo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Categoria cat = new Categoria();
-                cat.setIdCategoria(UUID.randomUUID().toString());
-//                validaDuplicados(cat.getNome());
-                cat.setNomeCategoria(editNomeCategoria.getText().toString());
-                databaseReference.child("Categoria").child(cat.getIdCategoria()).setValue(cat);
+                ConfigProduto conf = new ConfigProduto();
+                conf.setIdConfigProduto(UUID.randomUUID().toString());
+                conf.setNomeConfigProduto(editNomeConfiguracao.getText().toString());
+                databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).setValue(conf);
                 limparCampos();
             }
         });
         btnAtualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Categoria cat = new Categoria();
-                cat.setIdCategoria(categoriaSelecionada.getIdCategoria());
-                cat.setNomeCategoria(editNomeCategoria.getText().toString().trim());
-                databaseReference.child("Categoria").child(cat.getIdCategoria()).setValue(cat);
+                ConfigProduto conf = new ConfigProduto();
+                conf.setIdConfigProduto(configuracaoSelecionada.getIdConfigProduto());
+                conf.setNomeConfigProduto(editNomeConfiguracao.getText().toString().trim());
+                databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).setValue(conf);
                 limparCampos();
             }
         });
         btnApagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Categoria cat = new Categoria();
-                cat.setIdCategoria(categoriaSelecionada.getIdCategoria());
-                databaseReference.child("Categoria").child(cat.getIdCategoria()).removeValue();
+                ConfigProduto conf = new ConfigProduto();
+                conf.setIdConfigProduto(configuracaoSelecionada.getIdConfigProduto());
+                databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).removeValue();
                 limparCampos();
             }
         });
+
     }
 
     private void eventDataBase() {
-        databaseReference.child("Categoria").addValueEventListener(new ValueEventListener() {
+        databaseReference.child("Configuracao").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                listCategoria.clear();
+                listConfiguracao.clear();
                 for (DataSnapshot objSnapshot : dataSnapshot.getChildren()) {
-                    Categoria cat = objSnapshot.getValue(Categoria.class);
-                    listCategoria.add(cat);
+                    ConfigProduto conf = objSnapshot.getValue(ConfigProduto.class);
+                    listConfiguracao.add(conf);
                 }
-                arrayAdapterCategoria = new ArrayAdapter<>(CadastroCategoria.this, android.R.layout.simple_list_item_1, listCategoria);
-                listViewCategoria.setAdapter(arrayAdapterCategoria);
+                arrayAdapterConfiguracao = new ArrayAdapter<>(ConfiguracaoProduto.this, android.R.layout.simple_list_item_1, listConfiguracao);
+                listViewConfiguracao.setAdapter(arrayAdapterConfiguracao);
             }
 
             @Override
@@ -126,18 +128,12 @@ public class CadastroCategoria extends AppCompatActivity {
         });
     }
 
-//    private boolean validaDuplicados(String nome) {
-//        boolean duplicado = false;
-//
-//        return duplicado;
-//    }
+    private void limparCampos() {
+        editNomeConfiguracao.setText("");
+    }
 
     private void mensagem(String msg) {
         Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
-    }
-
-    private void limparCampos() {
-        editNomeCategoria.setText("");
     }
 
 }
