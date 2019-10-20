@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">ComandaAppAdm</string>
+    <string name="pizzaria">PIZZARIA</string>
+    <string name="la_casa">LA CASA</string>
+    <string name="cadastro">CADASTRO</string>
+    <string name="categoria">CATEGORIA</string>
+    <string name="configProduto">CONFIGURAÇÕES\n DE PRODUTO</string>
+    <string name="produto">PRODUTO</string>
+    <string name="listaProdutos">LISTA DE\n PRODUTOS</string>
 </resources>
