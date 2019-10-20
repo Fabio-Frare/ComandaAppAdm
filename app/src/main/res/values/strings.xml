@@ -7,4 +7,8 @@
     <string name="configProduto">CONFIGURAÇÕES\n DE PRODUTO</string>
     <string name="produto">PRODUTO</string>
     <string name="listaProdutos">LISTA DE\n PRODUTOS</string>
+    <string name="nome">Nome</string>
+    <string name="novo">NOVO</string>
+    <string name="atualizar">ATUALIZAR</string>
+    <string name="apagar">APAGAR</string>
 </resources>

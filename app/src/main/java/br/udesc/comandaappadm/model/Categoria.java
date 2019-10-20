@@ -1,9 +1,12 @@
 package br.udesc.comandaappadm.model;
 
-class Categoria {
+
+import androidx.annotation.NonNull;
+
+public class Categoria {
 
     private String idCategoria;
-    private String nome;
+    private String nomeCategoria;
 
     public String getIdCategoria() {
         return idCategoria;
@@ -13,12 +16,17 @@ class Categoria {
         this.idCategoria = idCategoria;
     }
 
-    public String getNome() {
-        return nome;
+    public String getNomeCategoria() {
+        return nomeCategoria;
     }
 
-    public void setNome(String nome) {
-        this.nome = nome;
+    public void setNomeCategoria(String nomeCategoria) {
+        this.nomeCategoria = nomeCategoria;
     }
 
+    @NonNull
+    @Override
+    public String toString() {
+        return nomeCategoria;
+    }
 }

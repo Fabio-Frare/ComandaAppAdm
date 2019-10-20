@@ -1,6 +1,6 @@
 package br.udesc.comandaappadm.model;
 
-class ConfigProduto {
+public class ConfigProduto {
 
     private String idConfigProduto;
     private String nomeConfigProduto;
