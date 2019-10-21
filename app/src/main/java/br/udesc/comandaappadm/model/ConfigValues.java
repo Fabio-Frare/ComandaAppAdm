@@ -32,10 +32,10 @@ public class ConfigValues {
         this.acrescimoPreco = acrescimoPreco;
     }
 
-    @NonNull
-    @Override
-    public String toString() {
-        return nomeConfigValue + " : R$ " + acrescimoPreco + ",00";
-    }
+//    @NonNull
+//    @Override
+//    public String toString() {
+//        return nomeConfigValue + " : R$ " + acrescimoPreco + ",00";
+//    }
 
 }
