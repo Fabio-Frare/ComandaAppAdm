@@ -24,10 +24,9 @@ import java.util.List;
 import java.util.UUID;
 
 import br.udesc.comandaappadm.R;
-import br.udesc.comandaappadm.model.Categoria;
 import br.udesc.comandaappadm.model.ConfigProduto;
 
-public class ConfiguracaoProduto extends AppCompatActivity {
+public class CadastroConfiguracaoProduto extends AppCompatActivity {
 
     private EditText editNomeConfiguracao;
     private Button btnNovo, btnAtualizar, btnApagar;
@@ -48,7 +47,6 @@ public class ConfiguracaoProduto extends AppCompatActivity {
         initFirebase();
         initListners();
         eventDataBase();
-
     }
 
     private void initComponentes() {
@@ -61,7 +59,7 @@ public class ConfiguracaoProduto extends AppCompatActivity {
     }
 
     private void initFirebase() {
-        FirebaseApp.initializeApp(ConfiguracaoProduto.this);
+        FirebaseApp.initializeApp(CadastroConfiguracaoProduto.this);
         firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.setPersistenceEnabled(true);     // além do Firebase, tbm atualiza no banco interno do meu aplicativo.
         databaseReference = firebaseDatabase.getReference();
@@ -81,7 +79,7 @@ public class ConfiguracaoProduto extends AppCompatActivity {
             public void onClick(View view) {
                 ConfigProduto conf = new ConfigProduto();
                 conf.setIdConfigProduto(UUID.randomUUID().toString());
-                conf.setNomeConfigProduto(editNomeConfiguracao.getText().toString());
+                conf.setNomeConfigProduto(editNomeConfiguracao.getText().toString().trim());
                 databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).setValue(conf);
                 limparCampos();
             }
@@ -117,7 +115,7 @@ public class ConfiguracaoProduto extends AppCompatActivity {
                     ConfigProduto conf = objSnapshot.getValue(ConfigProduto.class);
                     listConfiguracao.add(conf);
                 }
-                arrayAdapterConfiguracao = new ArrayAdapter<>(ConfiguracaoProduto.this, android.R.layout.simple_list_item_1, listConfiguracao);
+                arrayAdapterConfiguracao = new ArrayAdapter<>(CadastroConfiguracaoProduto.this, android.R.layout.simple_list_item_1, listConfiguracao);
                 listViewConfiguracao.setAdapter(arrayAdapterConfiguracao);
             }
 

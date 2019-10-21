@@ -46,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         btnConfigProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent it = new Intent(MainActivity.this, ConfiguracaoProduto.class);
+                Intent it = new Intent(MainActivity.this, CadastroConfiguracaoProduto.class);
                 startActivity(it);
             }
         });

@@ -12,4 +12,5 @@
     <string name="atualizar">ATUALIZAR</string>
     <string name="apagar">APAGAR</string>
     <string name="configuracao">CONFIGURAÇÃO\n DE PRODUTO</string>
+    <string name="config_values">VALORES DE\n CONFIGURAÇÃO</string>
 </resources>

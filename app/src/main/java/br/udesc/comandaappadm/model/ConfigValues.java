@@ -1,10 +1,12 @@
 package br.udesc.comandaappadm.model;
 
+import androidx.annotation.NonNull;
+
 public class ConfigValues {
 
     private String idConfigValue;
     private String nomeConfigValue;
-    private float acrescimoPreco;
+    private String acrescimoPreco;
 
     public String getIdConfigValue() {
         return idConfigValue;
@@ -22,12 +24,18 @@ public class ConfigValues {
         this.nomeConfigValue = nomeConfigValue;
     }
 
-    public float getAcrescimoPreco() {
+    public String getAcrescimoPreco() {
         return acrescimoPreco;
     }
 
-    public void setAcrescimoPreco(float acrescimoPreco) {
+    public void setAcrescimoPreco(String acrescimoPreco) {
         this.acrescimoPreco = acrescimoPreco;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nomeConfigValue + " : R$ " + acrescimoPreco + ",00";
     }
 
 }
