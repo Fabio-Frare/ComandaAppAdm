@@ -3,7 +3,6 @@ package br.udesc.comandaappadm.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -14,17 +13,12 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +30,7 @@ import br.udesc.comandaappadm.model.ConfigValues;
 
 public class CadastroConfiguracaoProduto extends AppCompatActivity {
 
-    private EditText editNomeConfiguracao, editConfigValue, editAcrescValue;
+    private EditText editNomeConfiguracao;
     private Button btnNovo, btnAtualizar, btnApagar;
     private ListView listViewConfiguracao;
     private FirebaseDatabase firebaseDatabase;
@@ -55,9 +49,7 @@ public class CadastroConfiguracaoProduto extends AppCompatActivity {
         initFirebase();
         initListners();
         eventDataBase();
-
     }
-
 
     private void initComponentes() {
         editNomeConfiguracao = findViewById(R.id.editNomeConfiguracao);
@@ -66,10 +58,6 @@ public class CadastroConfiguracaoProduto extends AppCompatActivity {
         btnAtualizar = findViewById(R.id.btnAtualizarConfig);
         btnApagar = findViewById(R.id.btnApagarConfig);
         listConfiguracao = new ArrayList<>();
-
-        editConfigValue = findViewById(R.id.editConfValue);
-        editAcrescValue = findViewById(R.id.editAcrescValue);
-
     }
 
     private void initFirebase() {
@@ -94,20 +82,12 @@ public class CadastroConfiguracaoProduto extends AppCompatActivity {
                 ConfigProduto conf = new ConfigProduto();
                 conf.setIdConfigProduto(UUID.randomUUID().toString());
                 conf.setNomeConfigProduto(editNomeConfiguracao.getText().toString().trim());
-//                databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).setValue(conf);
-
-                ConfigValues configValues = new ConfigValues();
-                configValues.setIdConfigValue(UUID.randomUUID().toString());
-                configValues.setNomeConfigValue(editConfigValue.getText().toString().trim());
-                configValues.setAcrescimoPreco(editAcrescValue.getText().toString().trim());
-                databaseReference.child("Configuracao")
-                        .child(conf.getNomeConfigProduto())
-                        .child(configValues.getNomeConfigValue())
-                        .setValue(configValues);
+                databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).setValue(conf);
 
                 limparCampos();
             }
         });
+
         btnAtualizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -115,15 +95,18 @@ public class CadastroConfiguracaoProduto extends AppCompatActivity {
                 conf.setIdConfigProduto(configuracaoSelecionada.getIdConfigProduto());
                 conf.setNomeConfigProduto(editNomeConfiguracao.getText().toString().trim());
                 databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).setValue(conf);
+
                 limparCampos();
             }
         });
+
         btnApagar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 ConfigProduto conf = new ConfigProduto();
                 conf.setIdConfigProduto(configuracaoSelecionada.getIdConfigProduto());
                 databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).removeValue();
+
                 limparCampos();
             }
         });

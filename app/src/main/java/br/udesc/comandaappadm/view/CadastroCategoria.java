@@ -46,21 +46,20 @@ public class CadastroCategoria extends AppCompatActivity {
         initFirebase();
         initListners();
         eventDataBase();
-
     }
 
     private void initComponentes() {
         editNomeCategoria = findViewById(R.id.editNomeCategoria);
         listViewCategoria = findViewById(R.id.listViewCategoria);
-        btnNovo           = findViewById(R.id.btnNovoConfig);
-        btnAtualizar      = findViewById(R.id.btnAtualizarConfig);
-        btnApagar         = findViewById(R.id.btnApagarConfig);
-        listCategoria     = new ArrayList<>();
+        btnNovo = findViewById(R.id.btnNovoConfig);
+        btnAtualizar = findViewById(R.id.btnAtualizarConfig);
+        btnApagar = findViewById(R.id.btnApagarConfig);
+        listCategoria = new ArrayList<>();
     }
 
     private void initFirebase() {
         FirebaseApp.initializeApp(CadastroCategoria.this);
-        firebaseDatabase  = FirebaseDatabase.getInstance();
+        firebaseDatabase = FirebaseDatabase.getInstance();
         firebaseDatabase.setPersistenceEnabled(true);     // além do Firebase, tbm atualiza no banco interno do meu aplicativo.
         databaseReference = firebaseDatabase.getReference();
     }
