@@ -13,4 +13,5 @@
     <string name="apagar">APAGAR</string>
     <string name="configuracao">CONFIGURAÇÃO\n DE PRODUTO</string>
     <string name="config_values">VALORES DE\n CONFIGURAÇÃO</string>
+    <string name="nova_configuracao">Adicionar Configuração</string>
 </resources>

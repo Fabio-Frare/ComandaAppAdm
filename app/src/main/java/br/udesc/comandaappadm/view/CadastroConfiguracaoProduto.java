@@ -3,8 +3,12 @@ package br.udesc.comandaappadm.view;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ContextMenu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -49,6 +53,21 @@ public class CadastroConfiguracaoProduto extends AppCompatActivity {
         initFirebase();
         initListners();
         eventDataBase();
+        registerForContextMenu(listViewConfiguracao);
+    }
+
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        MenuInflater i = getMenuInflater();
+        i.inflate(R.menu.menu_configuracao, menu);
+    }
+
+    public void novaConfigValue(MenuItem item) {
+        AdapterView.AdapterContextMenuInfo menuInfo = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        final ConfigProduto ConfigProduto = listConfiguracao.get(menuInfo.position);
+        Intent it = new Intent(this, ConfigValue.class);
+        it.putExtra("ConfigPoduto", ConfigProduto.getNomeConfigProduto());
+        startActivity(it);
     }
 
     private void initComponentes() {
@@ -59,6 +78,7 @@ public class CadastroConfiguracaoProduto extends AppCompatActivity {
         btnApagar = findViewById(R.id.btnApagarConfig);
         listConfiguracao = new ArrayList<>();
     }
+
 
     private void initFirebase() {
         FirebaseApp.initializeApp(CadastroConfiguracaoProduto.this);
@@ -83,7 +103,6 @@ public class CadastroConfiguracaoProduto extends AppCompatActivity {
                 conf.setIdConfigProduto(UUID.randomUUID().toString());
                 conf.setNomeConfigProduto(editNomeConfiguracao.getText().toString().trim());
                 databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).setValue(conf);
-
                 limparCampos();
             }
         });
@@ -95,7 +114,6 @@ public class CadastroConfiguracaoProduto extends AppCompatActivity {
                 conf.setIdConfigProduto(configuracaoSelecionada.getIdConfigProduto());
                 conf.setNomeConfigProduto(editNomeConfiguracao.getText().toString().trim());
                 databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).setValue(conf);
-
                 limparCampos();
             }
         });
@@ -106,7 +124,6 @@ public class CadastroConfiguracaoProduto extends AppCompatActivity {
                 ConfigProduto conf = new ConfigProduto();
                 conf.setIdConfigProduto(configuracaoSelecionada.getIdConfigProduto());
                 databaseReference.child("Configuracao").child(conf.getIdConfigProduto()).removeValue();
-
                 limparCampos();
             }
         });
